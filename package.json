@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hunterio/wappalyzer.git"
+    "url": "git+https://github.com/hunter-io/wappalyzer.git"
   },
   "funding": {
     "url": "https://github.com/sponsors/aliasio"
