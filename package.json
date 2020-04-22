@@ -1,19 +1,36 @@
 {
+  "name": "wappalyzer",
+  "description": "Identify technology on websites",
+  "homepage": "https://www.wappalyzer.com",
+  "version": "5.9.32",
+  "author": "Wappalyzer",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aliasio/wappalyzer"
+  },
+  "funding": {
+    "url": "https://github.com/sponsors/aliasio"
+  },
+  "main": "index.js",
+  "files": [
+    "apps.json",
+    "browser.js",
+    "browsers/zombie.js",
+    "browsers/puppeteer.js",
+    "cli.js",
+    "driver.js",
+    "index.js",
+    "wappalyzer.js"
+  ],
+  "bin": {
+    "wappalyzer": "./cli.js"
+  },
   "dependencies": {
-    "file-type": "7.4.*",
-    "is-svg": "2.1.*",
-    "read-chunk": "2.1.*"
+    "cld": "^2.6.0",
+    "zombie": "^6.1.4"
   },
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^13.0.0",
-    "eslint-plugin-import": "^2.13.0",
-    "mocha": "^5.2.0"
-  },
-  "scripts": {
-    "test": "mocha -R spec src",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
+  "peerDependencies": {
+    "puppeteer": "^2.0.0"
   }
 }

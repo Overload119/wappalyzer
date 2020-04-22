@@ -1,33 +1,34 @@
-FROM alpine
+FROM node:12-alpine
 
-LABEL maintainer="elbert@alias.io"
+MAINTAINER Wappalyzer <info@wappalyzer.com>
 
-ENV WAPPALYZER_DIR=/opt/wappalyzer
+ENV WAPPALYZER_ROOT /opt/wappalyzer
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+ENV CHROME_BIN /usr/bin/chromium-browser
 
 RUN apk update && apk add --no-cache \
-	bash \
-	curl \
-	fontconfig \
+	nodejs \
 	nodejs-npm \
-	optipng \
-	zip
+  udev \
+  chromium \
+  ttf-freefont
 
-# Fixes PhantomJS
-# https://github.com/dustinblackman/phantomized
-RUN curl -Ls "https://github.com/dustinblackman/phantomized/releases/download/2.1.1a/dockerized-phantomjs.tar.gz" | tar xz -C /
+RUN mkdir -p "$WAPPALYZER_ROOT/browsers"
 
-RUN apk del curl
+WORKDIR "$WAPPALYZER_ROOT"
 
-RUN npm i -g n npm@latest
+ADD apps.json .
+ADD browser.js .
+ADD browsers/zombie.js ./browsers
+ADD browsers/puppeteer.js ./browsers
+ADD cli.js .
+ADD driver.js .
+ADD index.js .
+ADD package.json .
+ADD wappalyzer.js .
 
-RUN n stable
+RUN npm i && npm i puppeteer
 
-RUN npm i --unsafe-perm --silent -g \
-	jsonlint-cli \
-	svg2png-many
+RUN /usr/bin/chromium-browser --version
 
-RUN mkdir -p $WAPPALYZER_DIR
-
-WORKDIR $WAPPALYZER_DIR
-
-CMD [ "./bin/run" ]
+ENTRYPOINT ["node", "cli.js"]
