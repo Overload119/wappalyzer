@@ -103,7 +103,6 @@ class PuppeteerBrowser extends Browser {
                 request.abort('aborted');
               } else if (!done) {
                 if (!['document', 'script'].includes(request.resourceType())) {
-                  this.log(`abort navigation to ${request.url()} due to resource type`);
                   request.abort();
                 } else {
                   request.continue();
