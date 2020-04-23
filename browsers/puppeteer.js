@@ -92,6 +92,8 @@ class PuppeteerBrowser extends Browser {
 
           page.on('request', (request) => {
             try {
+              this.log(`received request for ${request.url()}`);
+
               if (
                 responseReceived
                 && request.isNavigationRequest()
