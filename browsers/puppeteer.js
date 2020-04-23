@@ -150,7 +150,7 @@ class PuppeteerBrowser extends Browser {
             await page.setUserAgent(this.options.userAgent);
           }
 
-          await Promise.all([ await page.waitForNavigation() ])
+          await page.waitForNavigation()
 
           try {
             await Promise.race([
