@@ -115,8 +115,6 @@ class PuppeteerBrowser extends Browser {
 
           page.on('response', (response) => {
             try {
-              this.finalStatusCode = response.status();
-
               if (!this.statusCode) {
                 this.statusCode = response.status();
 
@@ -132,6 +130,7 @@ class PuppeteerBrowser extends Browser {
               }
 
               if (response.status() < 300 || response.status() > 399) {
+                this.finalStatusCode = response.status();
                 responseReceived = true;
               }
             } catch (error) {
@@ -152,6 +151,7 @@ class PuppeteerBrowser extends Browser {
           try {
             await Promise.race([
               page.goto(url, { waitUntil: 'domcontentloaded' }),
+              page.waitForNavigation(),
               // eslint-disable-next-line no-shadow
               new Promise((resolve, reject) => setTimeout(() => reject(new Error('timeout')), this.options.maxWait)),
             ]);
