@@ -92,8 +92,6 @@ class PuppeteerBrowser extends Browser {
 
           page.on('request', (request) => {
             try {
-              this.log(`received request for ${request.url()}`);
-
               if (
                 responseReceived
                 && request.isNavigationRequest()
@@ -118,6 +116,8 @@ class PuppeteerBrowser extends Browser {
 
           page.on('response', (response) => {
             try {
+              this.finalStatusCode = response.status();
+
               if (!this.statusCode) {
                 this.statusCode = response.status();
 
@@ -150,8 +150,6 @@ class PuppeteerBrowser extends Browser {
             await page.setUserAgent(this.options.userAgent);
           }
 
-          await page.waitForNavigation()
-
           try {
             await Promise.race([
               page.goto(url, { waitUntil: 'domcontentloaded' }),
@@ -161,6 +159,8 @@ class PuppeteerBrowser extends Browser {
           } catch (error) {
             throw new Error(error.message || error.toString());
           }
+
+          this.finalUrl = await page.url();
 
           // eslint-disable-next-line no-undef
           const links = await page.evaluateHandle(() => Array.from(document.getElementsByTagName('a')).map(({

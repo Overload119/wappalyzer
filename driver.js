@@ -219,6 +219,8 @@ class Driver {
     this.timer(`visit end; url: ${pageUrl.href}`, timerScope);
 
     this.analyzedPageUrls[pageUrl.href].status = browser.statusCode;
+    this.analyzedPageUrls[pageUrl.href].statusAfterRedirects = browser.finalStatusCode;
+    this.analyzedPageUrls[pageUrl.href].urlAfterRedirects = browser.finalUrl;
 
     // Validate response
     if (!browser.statusCode) {
