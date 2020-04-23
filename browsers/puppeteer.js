@@ -70,7 +70,7 @@ class PuppeteerBrowser extends Browser {
             executablePath: await chromium.executablePath,
             headless: chromium.headless,
           } : {
-            args: ['--no-sandbox', '--headless', '--disable-gpu', '--ignore-certificate-errors'],
+            args: ['--no-sandbox', '--headless', '--disable-gpu', '--ignore-certificate-errors --enable-logging=stderr --v=1'],
             executablePath: CHROME_BIN,
           });
 
