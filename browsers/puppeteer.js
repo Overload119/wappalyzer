@@ -64,13 +64,18 @@ class PuppeteerBrowser extends Browser {
     try {
       await new Promise(async (resolve, reject) => {
         try {
+          let browserArgs = ['--no-sandbox', '--disable-gpu', '--ignore-certificate-errors --enable-logging=stderr --v=1']
+          if (process.env.DISABLED_HEADLESS != "true") {
+            browserArgs.push('--headless')
+          }
+
           browser = await puppeteer.launch(chromium ? {
             args: [...chromium.args, '--ignore-certificate-errors'],
             defaultViewport: chromium.defaultViewport,
             executablePath: await chromium.executablePath,
             headless: chromium.headless,
           } : {
-            args: ['--no-sandbox', '--headless', '--disable-gpu', '--ignore-certificate-errors --enable-logging=stderr --v=1'],
+            args: browserArgs,
             executablePath: CHROME_BIN,
           });
 
