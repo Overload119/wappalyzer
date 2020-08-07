@@ -104,6 +104,8 @@ class PuppeteerBrowser extends Browser {
               } else if (!done) {
                 if (!['document', 'script'].includes(request.resourceType())) {
                   request.abort();
+                } else if (req.resourceType() == 'stylesheet' || req.resourceType() == 'font' || req.resourceType() == 'image'){
+                  req.abort();
                 } else {
                   request.continue();
                 }
