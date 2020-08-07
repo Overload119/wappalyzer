@@ -65,7 +65,7 @@ class PuppeteerBrowser extends Browser {
       await new Promise(async (resolve, reject) => {
         try {
           let browserArgs = ['--no-sandbox', '--disable-gpu', '--ignore-certificate-errors --enable-logging=stderr --v=1']
-          if (process.env.DISABLED_HEADLESS != "true") {
+          if (process.env.DISABLE_HEADLESS != "true") {
             browserArgs.push('--headless')
           }
 
